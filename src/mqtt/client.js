@@ -17,6 +17,9 @@ client.on('connect', function () {
     console.log('>> MQTT Broker Connected.')
     // subscribe to topic
     client.subscribe(`${MQTT_URL}led`)
+    client.subscribe(`${MQTT_URL}dht11`)
+    client.subscribe(`${MQTT_URL}mq5`)
+    client.subscribe(`${MQTT_URL}sound`)
 })
 
 client.on('error', function (error) {
@@ -26,14 +29,9 @@ client.on('error', function (error) {
 client.on('message', function (topic, message) {
     //Called each time a message is received
     console.log('>> Received message:', topic, message.toString())
-    switch(topic){
-        case `${MQTT_URL}led`: {
-            const data = JSON.parse(message.toString())
-            console.log(data)
-            sensorService.updateSensor(data)
-            break
-        }
-    }
+    const data = JSON.parse(message.toString())
+    // console.log(data)
+    sensorService.updateSensor(data)
 })
 
 // publish
