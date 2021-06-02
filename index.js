@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require("body-parser")
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const http = require('http')
 const MQTTClient = require('./src/mqtt/client')
 
@@ -27,6 +28,7 @@ mongoose.connect(
 .then(console.log(">> Database connected!"))
 .catch(error => console.log(error))
 
+app.use(cors())
 app.use(bodyParser.json({ limit: "5mb" }))
 app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }))
 app.use(cookieParser())

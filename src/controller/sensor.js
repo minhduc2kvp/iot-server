@@ -15,12 +15,9 @@ const getAllSensors = async (req, res) => {
 
 const updateSensor = async (req, res) => {
     try {
-        const {data} = req.body
-        const update = await sensorService.updateSensor(data)
-        if(update){
-            publish(MQTT_URL + data.name, data)
-            res.json(statusResponse.OK(data))
-        }
+        const data = req.body
+        publish(MQTT_URL + data.name, data)
+        res.json(statusResponse.OK(data))
     }catch (error){
         console.log(error)
         res.json(statusResponse.ERROR())

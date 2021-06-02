@@ -9,7 +9,7 @@ const login = async (req, res) => {
         const user = await User.findOne({ username, password })
         if (user) {
             const token = jwt.sign({id: user._id, username: username}, secret)
-            return res.cookie('auth_token', token, { maxAge: 9999999 }).json(statusResponse.OK("Login success !!!"))
+            return res.json(statusResponse.OK({username, token}))
         } else {
             return res.json(statusResponse.ERROR('Username or Password incorrect!'))
         }
