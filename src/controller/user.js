@@ -6,7 +6,7 @@ const secret = process.env.SECRET_STRING
 const login = async (req, res) => {
     try {
         const { username, password } = req.body
-        const user = await User.findOne({ username, password })
+        const user = await User.findOne({ username: username, password: password })
         if (user) {
             const token = jwt.sign({id: user._id, username: username}, secret)
             return res.json(statusResponse.OK({username, token}))
